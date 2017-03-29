@@ -532,7 +532,7 @@ CAxHost::CreateControl(bool subscribeToEvents)
 		return false;
 	}
 	
-#if 0
+//#if 0
 	IUnknown *control = NULL;
 	Site->GetControlUnknown(&control);
 	if (!control) {
@@ -552,7 +552,7 @@ CAxHost::CreateControl(bool subscribeToEvents)
 		// return false;
 		// It doesn't matter.
 	}
-#endif
+//#endif
 	np_log(instance, 1, "AxHost.CreateControl: control created successfully");
 	return true;
 }
