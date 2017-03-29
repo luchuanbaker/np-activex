@@ -57,7 +57,6 @@ static const unsigned int numTrustedLocations = 0;
 
 static const char *LocalhostName = "localhost";
 static const bool TrustLocalhost = true;
-
 //
 // Gecko API
 //
@@ -68,7 +67,7 @@ static const char PARAM_CLSID[] = "clsid";
 static const char PARAM_CLASSID[] = "classid";
 static const char PARAM_PROGID[] = "progid";
 static const char PARAM_DYNAMIC[] = "dynamic";
-static const char PARAM_DEBUG[] = "debugLevel";
+static const char PARAM_DEBUG[] = "debugLevel";1
 static const char PARAM_CODEBASEURL [] = "codeBase";
 static const char PARAM_ONEVENT[] = "Event_";
 
@@ -387,7 +386,7 @@ NPError CreateControl(NPP instance, int16 argc, char *argn[], char *argv[], CAxH
 	// Iterate over the arguments we've been passed
 	for (int i = 0; i < argc; ++i) {
 		// search for any needed information: clsid, event handling directives, etc.
-		if (strnicmp(argn[i], PARAM_CLASSID, sizeof(PARAM_CLASSID)) == 0) {
+		if (strnicmp(argn[i], PARAM_CLASSID, strlen(PARAM_CLASSID)) == 0) {
 			char clsid[100];
 			strncpy(clsid, argv[i], 80);
 			strcat(clsid, "}");
@@ -397,28 +396,28 @@ NPError CreateControl(NPP instance, int16 argc, char *argn[], char *argv[], CAxH
 			*id = '{';
 			host->setClsID(id);
 		}
-		else if (0 == strnicmp(argn[i], PARAM_NAME, sizeof(PARAM_NAME)) || 
+		else if (0 == strnicmp(argn[i], PARAM_NAME, strlen(PARAM_NAME)) || 
 			0 == strnicmp(argn[i], PARAM_ID, sizeof(PARAM_ID))) {
 			np_log(instance, 1, "instance %s: %s", argn[i], argv[i]);
 		}
-		else if (0 == strnicmp(argn[i], PARAM_CLSID, sizeof(PARAM_CLSID))) {
+		else if (0 == strnicmp(argn[i], PARAM_CLSID, strlen(PARAM_CLSID))) {
 			// The class id of the control we are asked to load
 
 			host->setClsID(argv[i]);
 		}
-		else if (0 == strnicmp(argn[i], PARAM_PROGID, sizeof(PARAM_PROGID))) {
+		else if (0 == strnicmp(argn[i], PARAM_PROGID, strlen(PARAM_PROGID))) {
 			// The class id of the control we are asked to load
 			host->setClsIDFromProgID(argv[i]);
 		}
-		else if (0 == strnicmp(argn[i], PARAM_DEBUG, sizeof(PARAM_DEBUG))) {
+		else if (0 == strnicmp(argn[i], PARAM_DEBUG, strlen(PARAM_DEBUG))) {
 			// Logging verbosity
 			log_level = atoi(argv[i]);
 		}
-		else if (0 == strnicmp(argn[i], PARAM_ONEVENT, sizeof(PARAM_ONEVENT))) {
+		else if (0 == strnicmp(argn[i], PARAM_ONEVENT, strlen(PARAM_ONEVENT))) {
 			// A request to handle one of the activex's events in JS
 			events.AddOrReplaceNamedProperty(A2W(argn[i] + strlen(PARAM_ONEVENT)), CComVariant(A2W(argv[i])));
 		}
-		else if(0  == strnicmp(argn[i], PARAM_CODEBASEURL, sizeof(PARAM_CODEBASEURL))) {
+		else if(0  == strnicmp(argn[i], PARAM_CODEBASEURL, strlen(PARAM_CODEBASEURL))) {
 			if (MatchURL2TrustedLocations(instance, A2W(argv[i]))) {
 				host->setCodeBaseUrl(A2W(argv[i]));
 			}
@@ -426,7 +425,7 @@ NPError CreateControl(NPP instance, int16 argc, char *argn[], char *argv[], CAxH
 				np_log(instance, 0, "AxHost.NPP_New: codeBaseUrl contains an untrusted location");
 			}
 		}
-		else if (0 == strnicmp(argn[i], PARAM_DYNAMIC, sizeof(PARAM_DYNAMIC))) {
+		else if (0 == strnicmp(argn[i], PARAM_DYNAMIC, strlen(PARAM_DYNAMIC))) {
 			host->setNoWindow(true);
 		}
 	}
